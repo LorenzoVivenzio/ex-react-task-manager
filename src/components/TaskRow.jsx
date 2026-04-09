@@ -1,28 +1,27 @@
+import { Link } from "react-router-dom";
 import React from "react";
 
-// React.memo evita che la riga venga ricaricata se i dati del task non cambiano
-const TaskRow = React.memo(({ task }) => {
-    
-    // Usiamo una variabile per salvare la classe di Bootstrap
-    let coloreClasse = "";
-
-    if (task.status === "To do") {
-        coloreClasse = "table-danger"; // Rosso
-    } else if (task.status === "Doing") {
-        coloreClasse = "table-warning"; // Giallo
-    } else if (task.status === "Done") {
-        coloreClasse = "table-success"; // Verde
-    }
+const TaskRow = ({ task }) => {
+    // Gestione colori Milestone 3 (Rimaniamo ordinati)
+    const getStatusColor = (status) => {
+        if (status === "To do") return "table-danger";
+        if (status === "Doing") return "table-warning";
+        if (status === "Done") return "table-success";
+        return "";
+    };
 
     return (
         <tr>
-            <td>{task.title}</td>
-            <td className={coloreClasse}>
-                {task.status}
+            <td>
+                {/* Milestone 7 */}
+                <Link to={`/task/${task.id}`} className="text-decoration-none fw-bold text-dark">
+                    {task.title}
+                </Link>
             </td>
-            <td>{new Date(task.createdAt).toLocaleString()}</td>
+            <td className={getStatusColor(task.status)}>{task.status}</td>
+            <td>{new Date(task.createdAt).toLocaleDateString()}</td>
         </tr>
     );
-});
+};
 
-export default TaskRow;
+export default React.memo(TaskRow);

@@ -4,6 +4,7 @@ import DefaultLayout from '../layout/DefaultLayout'; // Controlla che il percors
 import TaskList from './pages/TaskList';
 import AddTask from './pages/AddTask';
 import { GlobalProvider } from './context/GlobalContext';
+import TaskDetail from './pages/TaskDetail';
 
 function App() {
   return (
@@ -12,12 +13,12 @@ function App() {
         <Routes>
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<TaskList />} />
-            <Route path="/addTask" element={<AddTask />} />
+            <Route path="/addTask" element={<AddTask />} /> 
+            <Route path='/task/:id' element={<TaskDetail/>}/> 
           </Route>
         </Routes>
       </BrowserRouter>
     </GlobalProvider>
   );
 }
-
 export default App;

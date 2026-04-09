@@ -1,24 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext } from "react";
+import { useTask } from "../components/useTask";
 
 export const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
-
-    const [tasks, setTasks] = useState([]);
-    const url = import.meta.env.VITE_API_URL;
-
-    useEffect(() => {
-        fetch(`${url}/tasks`)
-            .then(res => res.json())
-            .then(data => {
-                setTasks(data);
-                console.log(data);
-            });
-    }, []);
+    
+    const taskData = useTask();
 
     return (
-        <GlobalContext.Provider value={{ tasks }}>
+        <GlobalContext.Provider value={taskData}>
             {children}
         </GlobalContext.Provider>
     );
 }
+
+//creiamo un hook personalizzato per non dover scrivere ogni volta useContext(GlobalContext)
+export const useGlobalContext = () => useContext(GlobalContext);
